@@ -5,5 +5,5 @@ export type BookRequest = {
   summary?: string;
   publisher?: string;
   publicationDate: string;  
-  creatorId: string;
+  creatorId?: string;
 }

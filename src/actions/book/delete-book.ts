@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 
 import { BookUseCases } from '@/actions/book/book-use-cases';
 import { UnexpectedError } from '@/backend/core/errors/unexpected-error';
+import { redirect } from 'next/navigation';
 
 export async function deleteBook(id: string) {
   // try {
@@ -28,4 +29,5 @@ export async function deleteBook(id: string) {
   // else return { message: 'Book deleted successfully', book: BookPresenter.toHttpResponse(responseValue.book) }; // TODO: locale
 
   revalidatePath('/books');
+  redirect('/books');
 }

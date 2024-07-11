@@ -56,5 +56,5 @@ export async function createBook(body: BookRequest) {
   // else return { message: 'Book updated successfully', book: BookPresenter.toHttpResponse(responseValue.book) }; // TODO: locale
   
   revalidatePath('/books');
-  redirect('/books');  
+  redirect('/books');
 }

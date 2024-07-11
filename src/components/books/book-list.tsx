@@ -1,31 +1,38 @@
 'use client'
 
-import { DataGrid, DataGridProps, GridColDef, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, DataGridProps, GridCellParams, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import { TextField, Button, Grid } from '@mui/material';
 
 import { useBookList } from '@/hooks/use-book-list'
 import React from 'react';
 import { Book } from '@/@types/book';
 
-type Props = {
-  refresh: boolean;
-  setRefresh: (refresh: boolean) => void;
-  handleEdit: (id: string) => void;
-}
+// type Props = {
+//   refresh: boolean;
+//   setRefresh: (refresh: boolean) => void;
+//   handleEdit: (id: string) => void;
+// }
 
-const BookList = ({ refresh, setRefresh, handleEdit }: Props) => {
-  const {books, columns, paginationModel, setPaginationModel, rowCount, setRowCount, query, setQuery} = useBookList({refresh, setRefresh, handleEdit});
+// const BookList = ({ refresh, setRefresh, handleEdit }: Props) => {
+// const BookList = ({ handleEdit }: Props) => {
+const BookList = () => {
+  // console.log('BookList.tsx: refresh', refresh);
+
+  const {books, columns, paginationModel, setPaginationModel, rowCount, query, setQuery} = 
+    // useBookList({refresh, setRefresh, handleEdit});
+    // useBookList({handleEdit});
+    useBookList();
 
   // Some API clients return undefined while loading
   // Following lines are here to prevent `rowCount` from being undefined during the loading
-  const rowCountRef = React.useRef(rowCount || 0);
-  const rowCountMemo = React.useMemo(() => {
-    if (rowCount !== undefined) {
-      rowCountRef.current = rowCount;
-    }
-    return rowCountRef.current;
-  }, [rowCount]);
-
+  // const rowCountRef = React.useRef(rowCount || 0);
+  // const rowCountMemo = React.useMemo(() => {
+  //   if (rowCount !== undefined) {
+  //     rowCountRef.current = rowCount;
+  //   }
+  //   return rowCountRef.current;
+  // }, [rowCount]);
+  
   return (
     <div style={{ width: '100%' }}>
       <hr/>
@@ -51,6 +58,7 @@ const BookList = ({ refresh, setRefresh, handleEdit }: Props) => {
           paginationMode='server'
           // sortingMode='server'
           autoHeight
+          className='noOutlineOnFocus'
         />)
         : null}
     </div>

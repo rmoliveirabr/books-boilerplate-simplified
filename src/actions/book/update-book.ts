@@ -46,7 +46,7 @@ export async function updateBook(body: BookRequest) {
   const responseValue = response.getResponse();
 
   if (response.isError() || !responseValue) throw new UnexpectedError(response.getError()?.message);
-  else return { message: 'Book updated successfully', book: BookPresenter.toHttpResponse(responseValue.book) }; // TODO: locale
+  // else return { message: 'Book updated successfully', book: BookPresenter.toHttpResponse(responseValue.book) }; // TODO: locale
 
   revalidatePath('/books');
   redirect('/books');

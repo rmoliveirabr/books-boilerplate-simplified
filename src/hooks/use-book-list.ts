@@ -10,19 +10,26 @@ import { getAllBooks } from '@/actions/book/get-all-books'
 import { deleteBook } from '@/actions/book/delete-book'
 
 import { useBookColumns } from '@/hooks/use-book-columns';
+import { useBookContext } from '@/contexts/book-context';
 
-type Props = {
-  refresh: boolean;
-  setRefresh: (refresh: boolean) => void;
-  handleEdit: (id: string) => void;
-}
+// type Props = {
+//   refresh: boolean;
+//   setRefresh: (refresh: boolean) => void;
+//   handleEdit: (id: string) => void;
+// }
 
-export const useBookList = ({ refresh, setRefresh, handleEdit }: Props)  => {
+// export const useBookList = ({ refresh, setRefresh, handleEdit }: Props)  => {
+// export const useBookList = ({ handleEdit }: Props)  => {
+export const useBookList = ()  => {
   const [books, setBooks] = useState<BookRequest[]>([]);
   // const [page, setPage] = useState<number>(0);
   // const [pageSize, setPageSize] = useState<number>(5);
   const [query, setQuery] = useState<string>('');
   const [rowCount, setRowCount] = useState<number>(-1);
+
+  const { refresh, setRefresh, handleEdit } = useBookContext();
+
+  console.log('useBookList.ts: refresh', refresh);
   
   const [paginationModel, setPaginationModel] = React.useState({
     page: 0,
@@ -41,7 +48,7 @@ export const useBookList = ({ refresh, setRefresh, handleEdit }: Props)  => {
           query: query
         });
 
-        // console.log(`page: ${correctedPage}, pageSize: ${paginationModel.pageSize}, response:`, response)
+        console.log(`*** Referching BookList: page: ${correctedPage}, pageSize: ${paginationModel.pageSize}, response:`, response)
        
         setBooks(response.books);
         setRowCount(response.totalCount);
@@ -51,14 +58,15 @@ export const useBookList = ({ refresh, setRefresh, handleEdit }: Props)  => {
     };
 
     fetchBooks();
-  }, [paginationModel, query, refresh]);
+    setRefresh(false);
+  }, 
+  [paginationModel, query, refresh, setRefresh]);
 
   const handleDelete = async (id: string) => {
     try {
       await deleteBook(id);
       showToast('Book deleted successfully', 'success');
-      setBooks(prev => prev.filter(book => book.id !== id));
-      setRefresh(!refresh);
+      setRefresh(true);
     } catch (error) {
       showToast('An error occurred', 'error');
     }

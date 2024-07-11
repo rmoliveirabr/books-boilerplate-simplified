@@ -8,7 +8,7 @@ import { showToast } from '@/components/toast';
 import { signIn } from 'next-auth/react';
 // import logger from '@/logger'; 
 
-const SignInFormSchema = z.object({
+const SignInForm = z.object({
   username: z.string().email({
     message: 'Email is required',
   }),
@@ -17,10 +17,10 @@ const SignInFormSchema = z.object({
   }),
 })
 
-export type FormSignInSchemaProps = z.infer<typeof SignInFormSchema>
+export type SignInFormSchema = z.infer<typeof SignInForm>
 
 // for signup, this is done in an server action... however, nextauth's signIn cannot be used on server side, so we need to do it here
-async function handleSignIn(data: FormSignInSchemaProps) {
+async function handleSignIn(data: SignInFormSchema) {
   try {
     // console.log('handleSignIn', data.username, data.password) // TODO: remove
 
@@ -50,8 +50,8 @@ async function handleSignIn(data: FormSignInSchemaProps) {
 }
 
 export function useSignIn() {
-  const { formState, register, handleSubmit, formState: { errors } } = useForm<FormSignInSchemaProps>({
-    resolver: zodResolver(SignInFormSchema),
+  const { formState, register, handleSubmit, formState: { errors } } = useForm<SignInFormSchema>({
+    resolver: zodResolver(SignInForm),
     defaultValues: {
       username: '',
       password: '',
