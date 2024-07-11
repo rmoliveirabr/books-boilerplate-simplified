@@ -10,13 +10,11 @@ h1 {
 /*
 Material UI DataGrid
 */
-.MuiDataGrid-columnHeaderTitleContainer
-.MuiDataGrid-columnHeaderDraggableContainer
-.MuiDataGrid-columnHeader {
-  color: black;
-  background: blue;
+.customHeader .MuiDataGrid-columnHeader {
+  background-color: gray; 
 }
 
-.noOutlineOnFocus .MuiDataGrid-root .MuiDataGrid-cell:focus-within {
-  outline: none !important;
+.noOutlineOnFocus .MuiDataGrid-cell:focus,
+.noOutlineOnFocus .MuiDataGrid-cell:focus-within {
+  outline: none;
 }

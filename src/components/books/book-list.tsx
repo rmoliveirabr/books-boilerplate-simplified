@@ -34,7 +34,7 @@ const BookList = () => {
   // }, [rowCount]);
   
   return (
-    <div style={{ width: '100%' }}>
+    <div className='w-full h-full flex flex-col'>
       <hr/>
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -47,20 +47,23 @@ const BookList = () => {
         </Grid>
       </Grid>
       {books.length > 0 ? (
-        <DataGrid
-          rows={books}
-          columns={columns}
-          pagination
-          rowCount={rowCount}
-          pageSizeOptions={[5, 10, 20]} 
-          paginationModel={paginationModel}
-          onPaginationModelChange={setPaginationModel}
-          paginationMode='server'
-          // sortingMode='server'
-          autoHeight
-          className='noOutlineOnFocus'
-        />)
-        : null}
+        <div className="flex-1 min-h-0">
+          <DataGrid
+            rows={books}
+            columns={columns}
+            pagination
+            rowCount={rowCount}
+            pageSizeOptions={[5, 10, 20]} 
+            paginationModel={paginationModel}
+            onPaginationModelChange={setPaginationModel}
+            paginationMode='server'
+            // sortingMode='server'
+            autoHeight
+            className='noOutlineOnFocus customHeader'
+          />
+        </div>
+      )
+      : null}
     </div>
   );
 };
